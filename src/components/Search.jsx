@@ -5,7 +5,10 @@ export const Search = ({ onSearch }) => {
   const [username, setUsername] = useState("");
 
   return (
-    <form className="max-w-xl mx-auto p-2" onSubmit={(e) => onSearch(e, username)}>
+    <form
+      className="max-w-xl mx-auto p-2"
+      onSubmit={(e) => onSearch(e, username)}
+    >
       <label
         htmlFor="default-search"
         className="mb-2 text-sm font-medium text-gray-900 sr-only"

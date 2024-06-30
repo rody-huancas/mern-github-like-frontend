@@ -10,3 +10,9 @@ export const PROGRAMMING_LANGUAGES = {
   HTML: "/html.svg",
   CSS: "/css.svg",
 };
+
+export const BUTTONS_REPOS = [
+  { label: "Más Recientes", type: "recent" },
+  { label: "Más Estrellas", type: "starts" },
+  { label: "Más Forks", type: "forks" },
+];
