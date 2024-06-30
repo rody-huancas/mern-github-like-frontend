@@ -1,29 +1,11 @@
-import { IoLocationOutline } from "react-icons/io5";
-import {
-  RiGitRepositoryFill,
-  RiUserFollowFill,
-  RiUserFollowLine,
-} from "react-icons/ri";
+import { FaEye } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { TfiThought } from "react-icons/tfi";
-import { FaEye } from "react-icons/fa";
+import { IoLocationOutline } from "react-icons/io5";
+import { RiGitRepositoryFill, RiUserFollowFill, RiUserFollowLine } from "react-icons/ri";
+import { formatMemberSince } from "../utils/functions";
 
-export const ProfileInfo = () => {
-  const userProfile = {
-    avatar_url:
-      "https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png?rev=2540745",
-    bio: "👨🏻‍💻👨🏻‍💻👨🏻‍💻",
-    email: "rodyhuancas.04@gmail.com",
-    followers: 100,
-    following: 200,
-    html_url: "https://github.com/rody-huancas",
-    location: "Chiclayo, Perú",
-    name: "Rody Huancas",
-    public_gists: 100,
-    public_repos: 100,
-    twitter_username: "@rodyhuancas",
-    login: "rody-huancas",
-  };
+export const ProfileInfo = ({ userProfile }) => {
 
   return (
     <div className="lg:w-1/3 w-full flex flex-col gap-2 md:sticky md:top-10">
@@ -40,7 +22,7 @@ export const ProfileInfo = () => {
           {/* View on Github */}
           <div className="flex gap-2 items-center flex-col">
             <a
-              href={userProfile.html_url}
+              href={userProfile?.html_url}
               target="_blank"
               rel="noreferrer"
               className="bg-glass font-medium w-full text-xs p-2 rounded-md cursor-pointer border border-blue-400 flex items-center gap-2"
@@ -83,7 +65,7 @@ export const ProfileInfo = () => {
         {/* Member Since Date */}
         <div className="my-2">
           <p className="text-gray-600 font-bold text-sm">Miembro desde</p>
-          <p className="">21 Sep, 2023</p>
+          <p className="">{formatMemberSince(userProfile?.created_at)}</p>
         </div>
 
         {/* Email Address */}
@@ -135,7 +117,7 @@ export const ProfileInfo = () => {
         {/* Number of public gists */}
         <div className="flex items-center gap-2 bg-glass rounded-lg p-2 flex-1 min-w-24">
           <RiGitRepositoryFill className="w-5 h-5 text-blue-800" />
-          <p className="text-xs">Public gists: {userProfile?.public_gists}</p>
+          <p className="text-xs">Gists Públicos: {userProfile?.public_gists}</p>
         </div>
       </div>
     </div>
