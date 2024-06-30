@@ -1,9 +1,19 @@
+import toast from "react-hot-toast";
 import { FaCodeFork } from "react-icons/fa6";
 import { formatDate } from "../utils/functions";
 import { PROGRAMMING_LANGUAGES } from "../utils/constants";
 import { FaCodeBranch, FaCopy, FaRegStar } from "react-icons/fa";
 
 export const Repo = ({ repo }) => {
+  const handleCloneClick = async (repo) => {
+    try {
+      await navigator.clipboard.writeText(repo.clone_url);
+      toast.success("URL del repositorio copiado");
+    } catch (error) {
+      toast.error("Ocurrió un error al copiar el repositorio");
+    }
+  };
+
   return (
     <li className="mb-10 ms-7">
       <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -start-3 ring-8 ring-white">
@@ -24,7 +34,10 @@ export const Repo = ({ repo }) => {
         <span className="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded-full flex items-center gap-1">
           <FaCodeFork /> {repo.forks_count}
         </span>
-        <span className="cursor-pointer bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full flex items-center gap-1">
+        <span
+          onClick={() => handleCloneClick(repo)}
+          className="cursor-pointer bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full flex items-center gap-1"
+        >
           <FaCopy /> Clonar
         </span>
       </div>
