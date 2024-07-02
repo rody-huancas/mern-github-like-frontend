@@ -2,6 +2,7 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useCallback } from "react";
+import { GITHUB_API_KEY, URL_GITHUB_USERS } from "../config/env.config";
 import { ProfileInfo, Repos, Search, SortRepos, Spinner } from "../components";
 
 export const HomePage = () => {
@@ -14,9 +15,9 @@ export const HomePage = () => {
     async (username = "rody-huancas") => {
       setloading(true);
       try {
-        const userRes = await fetch(`https://api.github.com/users/${username}`, {
+        const userRes = await fetch(`${URL_GITHUB_USERS}/${username}`, {
           headers: {
-            authorization: `token ${import.meta.env.VITE_GITHUB_API_KEY}`
+            authorization: `token ${GITHUB_API_KEY}`
           }
         });
         const userProfile = await userRes.json();
