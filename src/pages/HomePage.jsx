@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { ProfileInfo, Repos, Search, SortRepos, Spinner } from "../components";
-import { useEffect } from "react";
 import toast from "react-hot-toast";
+import { useState } from "react";
+import { useEffect } from "react";
 import { useCallback } from "react";
+import { ProfileInfo, Repos, Search, SortRepos, Spinner } from "../components";
 
 export const HomePage = () => {
   const [userProfile, setUserProfile] = useState(null);
@@ -14,7 +14,11 @@ export const HomePage = () => {
     async (username = "rody-huancas") => {
       setloading(true);
       try {
-        const userRes = await fetch(`https://api.github.com/users/${username}`);
+        const userRes = await fetch(`https://api.github.com/users/${username}`, {
+          headers: {
+            authorization: `token ${import.meta.env.VITE_GITHUB_API_KEY}`
+          }
+        });
         const userProfile = await userRes.json();
         setUserProfile(userProfile);
 
