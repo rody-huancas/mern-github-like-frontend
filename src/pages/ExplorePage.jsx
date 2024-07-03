@@ -1,7 +1,8 @@
-import { useState } from "react";
-import { Spinner } from "../components/Spinner";
 import toast from "react-hot-toast";
 import { Repos } from "../components/Repos";
+import { Spinner } from "../components/Spinner";
+import { useState } from "react";
+import { GITHUB_API_KEY } from "../config/env.config";
 
 export const ExplorePage = () => {
   const [loading, setLoading] = useState(false);
@@ -13,7 +14,11 @@ export const ExplorePage = () => {
     setRepos([]);
     try {
       const res = await fetch(
-        `https://api.github.com/search/repositories?q=language:${language}&sort=starts&order=desc&per_page=10`
+        `https://api.github.com/search/repositories?q=language:${language}&sort=starts&order=desc&per_page=10`, {
+          headers: {
+             authorization: `token ${GITHUB_API_KEY}`
+          }
+        }
       );
       const data = await res.json();
       setRepos(data.items);
@@ -71,11 +76,7 @@ export const ExplorePage = () => {
             Repositorios
           </h2>
         )}
-        {!loading && (
-          <div className="w-full flex justify-center">
-            <Repos repos={repos} />
-          </div>
-        )}
+        {!loading && <Repos repos={repos} alwaysFullWidth />}
         {loading && <Spinner />}
       </div>
     </div>
