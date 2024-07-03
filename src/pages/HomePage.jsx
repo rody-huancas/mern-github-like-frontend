@@ -20,6 +20,7 @@ export const HomePage = () => {
             authorization: `token ${GITHUB_API_KEY}`
           }
         });
+        
         const userProfile = await userRes.json();
         setUserProfile(userProfile);
 

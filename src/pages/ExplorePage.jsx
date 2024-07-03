@@ -1,4 +1,30 @@
+import { useState } from "react";
+import { Spinner } from "../components/Spinner";
+import toast from "react-hot-toast";
+import { Repos } from "../components/Repos";
+
 export const ExplorePage = () => {
+  const [loading, setLoading] = useState(false);
+  const [repos, setRepos] = useState([]);
+  const [selectedLanguage, setSelectedLanguage] = useState("");
+
+  const exploreRepos = async (language) => {
+    setLoading(true);
+    setRepos([]);
+    try {
+      const res = await fetch(
+        `https://api.github.com/search/repositories?q=language:${language}&sort=starts&order=desc&per_page=10`
+      );
+      const data = await res.json();
+      setRepos(data.items);
+      setSelectedLanguage(language);
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="px-4">
       <div className="bg-glass max-w-2xl mx-auto rounded-md p-4">
@@ -10,28 +36,47 @@ export const ExplorePage = () => {
             src="/javascript.svg"
             alt="JavaScript"
             className="h-11 sm:h-20 cursor-pointer"
+            onClick={() => exploreRepos("javascript")}
           />
           <img
             src="/typescript.svg"
             alt="TypeScript logo"
             className="h-11 sm:h-20 cursor-pointer"
+            onClick={() => exploreRepos("typescript")}
           />
           <img
             src="/c++.svg"
             alt="C++ logo"
             className="h-11 sm:h-20 cursor-pointer"
+            onClick={() => exploreRepos("c++")}
           />
           <img
             src="/python.svg"
             alt="Python logo"
             className="h-11 sm:h-20 cursor-pointer"
+            onClick={() => exploreRepos("python")}
           />
           <img
             src="/java.svg"
             alt="Java logo"
             className="h-11 sm:h-20 cursor-pointer"
+            onClick={() => exploreRepos("java")}
           />
         </div>
+        {repos.length > 0 && (
+          <h2 className="text-lg font-semibold text-center my-4">
+            <span className="bg-blue-100 text-blue-800 font-medium me-2.5 px-2.5 py-0.5 rounded-full">
+              {selectedLanguage.toUpperCase()}{" "}
+            </span>
+            Repositorios
+          </h2>
+        )}
+        {!loading && (
+          <div className="w-full flex justify-center">
+            <Repos repos={repos} />
+          </div>
+        )}
+        {loading && <Spinner />}
       </div>
     </div>
   );
